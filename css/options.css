@@ -1,0 +1,32 @@
+body {
+	font-family: Tahoma, sans-serif;
+    text-align: left;
+    padding: 25px;
+}
+
+div.colors {
+    margin-bottom: 20px;
+    height: 60px;
+}
+
+.left {
+    float: left;
+    width: 300px;
+}
+
+.right {
+    float: left;
+    width: 300px;
+}
+
+label {
+    font-weight: 600;
+    width: 300px;
+    display: block;
+}
+
+textarea {
+    width: 100%;
+    height: 250px;
+}
+

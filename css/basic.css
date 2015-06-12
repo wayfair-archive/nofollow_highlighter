@@ -1,0 +1,20 @@
+a.nfe-extension-link {
+    color: black
+}
+
+a.nfe-extension-link.nfe-nofollow {
+    background-color: gold !important;
+}
+
+a.nfe-extension-link.nfe-nofollow img {
+    border: 2px solid gold !important;
+}
+
+a.nfe-extension-link.nfe-not-nofollow {
+    background-color: limegreen !important;
+}
+
+a.nfe-extension-link.nfe-not-nofollow img {
+    border: 6px solid limegreen !important;
+}
+

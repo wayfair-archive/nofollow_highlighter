@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Options - No-follow Highligher</title>
+<script src="../js/options.js"></script>
+<script src="../lib/jscolor/jscolor.js"></script>
+<link href="../css/options.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <h2>Options for No-Follow Highlighter</h2>
+  <h3>Sites active</h3>
+  <p>Editing these options is currently simplified so that the extension could be released.  I'll come back to it to make editing these options more user-friendly.</p>
+
+  <div class="colors">
+      <div class="left">
+          <label for="follow_fg">Follow text color</label>
+          <input id="follow_fg" class="color" value="000000"><br/>
+          <label for="follow_bg">Follow background color</label>
+          <input id="follow_bg" class="color" value="00FF00">
+      </div>
+      <div class="right">
+          <label for="nofollow_fg">No-Follow text color</label>
+          <input id="nofollow_fg" class="color" value="000000"><br/>
+          <label for="nofollow_bg">No-Follow text color</label>
+          <input id="nofollow_bg" class="color" value="FFD000">
+      </div>
+  </div>
+  <p>
+      <label for="domains">Domains:</label><br/>
+      Enter root level domains, each on its own line.
+      <textarea id="domains" name="domains"></textarea><br/>
+  </p>
+  <p>
+      <label for="nfe_state">Enabled sites.  </label><br/>
+      Generated automatically when you visit a site and enable/disable Nofollow Highlighter, but you can use this to share your enabled sites with others.
+      <textarea name="nfe_state" id="nfe_state"></textarea><br/>
+      <button id="clearSites">Clear sites</button>
+  </p>
+
+  <p>
+      <button id="saveSites">Save settings</button>
+  </p>
+
+</body>
+</html>
