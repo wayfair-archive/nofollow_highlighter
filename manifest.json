@@ -1,9 +1,10 @@
 {
+  "author": "Wayfair",
   "name": "No-Follow SEO Link Highlighter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "minimum_chrome_version": "16.0",
   "manifest_version": 2,
-  "description": "Highlight nofollow links",
+  "description": "Highlight follow and nofollow links",
   "permissions": [
     "activeTab",
     "tabs"
