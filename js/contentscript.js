@@ -16,9 +16,11 @@ function applyClasses(domains, colors) {
             if ($el.attr("rel") && $el.attr("rel").split(' ').indexOf("nofollow") > -1) {
               $el.css('background-color', '#' + colors.nofollow_bg);
               $el.css('color', '#' + colors.nofollow_fg);
+              $el.find('img').css('border', '6px solid #' + colors.nofollow_bg);
             } else {
               $el.css('background-color', '#' + colors.follow_bg);
               $el.css('color', '#' + colors.follow_fg);
+              $el.find('img').css('border', '6px solid #' + colors.follow_bg);
             }
             break;
           }
@@ -36,6 +38,9 @@ function removeClasses() {
   links.removeClass('nfe-extension-link');
   links.css('background-color', '');
   links.css('color', '');
+  links.each(function(idx, el) {
+    $(el).find('img').css('border', '');
+  });
 }
 
 /*
