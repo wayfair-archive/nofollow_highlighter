@@ -5,42 +5,56 @@
 <title>Options - No-follow Highligher</title>
 <script src="../js/options.js"></script>
 <script src="../lib/jscolor/jscolor.js"></script>
+<script src="../lib/jquery-1.11.3.min.js"></script>
 <link href="../css/options.css" rel="stylesheet" type="text/css">
 </head>
 <body>
   <h2>Options for No-Follow Highlighter</h2>
-  <h3>Sites active</h3>
-  <p>Editing these options is currently simplified so that the extension could be released.  I'll come back to it to make editing these options more user-friendly.</p>
+  <p>Changes take place immediately, but you might need to refresh a page that you're currently viewing.</p>
 
+  <h3>Colors</h3>
   <div class="colors">
-      <div class="left">
-          <label for="follow_fg">Follow text color</label>
+      <div class="follow">
+          <div class="color-heading">
+              <label><input type="checkbox" name="follow_enabled">Highlight follow links</label>
+          </div>
+          <label for="follow_fg">Text color</label>
           <input id="follow_fg" class="color" value="000000"><br/>
-          <label for="follow_bg">Follow background color</label>
+          <label for="follow_bg">Background color</label>
           <input id="follow_bg" class="color" value="00FF00">
       </div>
-      <div class="right">
-          <label for="nofollow_fg">No-Follow text color</label>
+      <div class="nofollow">
+          <div class="color-heading">
+              <label><input type="checkbox" name="nofollow_enabled">Highlight nofollow links</label>
+          </div>
+          <label for="nofollow_fg">Text color</label>
           <input id="nofollow_fg" class="color" value="000000"><br/>
-          <label for="nofollow_bg">No-Follow text color</label>
+          <label for="nofollow_bg">Background color</label>
           <input id="nofollow_bg" class="color" value="FFD000">
       </div>
   </div>
-  <p>
-      <label for="domains">Domains:</label><br/>
+
+
+  <div class="domains">
+      <h3>Domains</h3>
       Enter root level domains, each on its own line.
       <textarea id="domains" name="domains"></textarea><br/>
-  </p>
-  <p>
-      <label for="nfe_state">Enabled sites.  </label><br/>
-      Generated automatically when you visit a site and enable/disable Nofollow Highlighter, but you can use this to share your enabled sites with others.
-      <textarea name="nfe_state" id="nfe_state"></textarea><br/>
-      <button id="clearSites">Clear sites</button>
-  </p>
+  </div>
 
-  <p>
-      <button id="saveSites">Save settings</button>
-  </p>
+  <div class="general-options">
+      <h3>Toggle behavior</h3>
+      <label class="in-line"><input name="toggle_behaviour" type="radio" value="all">Toggle Always On or Off</label><br/>
+      <label class="in-line"><input name="toggle_behaviour" type="radio" value="site">Toggle On/Off by Site (defaults to off)</label>
+  </div>
+
+  <div class="enabled_sites">
+      <p>
+          <label for="nfe_state">Enabled sites.  </label><br/>
+          Generated automatically when you visit a site and enable/disable Nofollow Highlighter, but you can use this to share your enabled sites with others.
+          <textarea name="nfe_state" id="nfe_state"></textarea><br/>
+          <button id="clearSites">Clear sites</button>
+      </p>
+  </div>
 
 </body>
 </html>

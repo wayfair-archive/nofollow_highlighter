@@ -16,27 +16,40 @@ function updateIcon(setting) {
  * Checks that the current page is turned on or off, and sends message to content script
  */
 function checkCurrent() {
-  chrome.tabs.getSelected(undefined, function (tab) {
-    url = tab.url;
-    tabId = tab.id;
-    var pattern = getPattern(url);
-    var state = JSON.parse(chrome.extension.getBackgroundPage().getLocalStorageRules());
-    var settings = 'off';
-    for (var i = 0; i < state.length; i++) {
-      if (state[i].primaryPattern == pattern) {
-        settings = state[i].setting
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var tab = tabs[0];
+    if (tab) {
+      url = tab.url;
+      tabId = tab.id;
+      var domains = chrome.extension.getBackgroundPage().getDomains();
+      var colors = chrome.extension.getBackgroundPage().getColors();
+      if (window.localStorage.follow_enabled === "false") {
+        delete colors.follow_fg;
+        delete colors.follow_bg;
+      }
+      if (window.localStorage.nofollow_enabled === "false") {
+        delete colors.nofollow_fg;
+        delete colors.nofollow_bg;
+      }
+      if (window.localStorage.toggleBehaviour == 'all') {
+        chrome.tabs.sendMessage(tab.id, {
+          show: window.localStorage.toggleState === "on",
+          domains: domains,
+          colors: colors
+        });
+      } else {
+        var pattern = getPattern(url);
+        var state = JSON.parse(chrome.extension.getBackgroundPage().getLocalStorageRules());
+        var settings = 'off';
+        for (var i = 0; i < state.length; i++) {
+          if (state[i].primaryPattern == pattern) {
+            settings = state[i].setting
+          }
+        }
+        updateIcon(settings);
+        chrome.tabs.sendMessage(tab.id, {show: settings === 'on', domains: domains, colors: colors});
       }
     }
-    updateIcon(settings);
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-      if (tabs && tabs.length > 0) {
-        var domains = chrome.extension.getBackgroundPage().getDomains();
-        var colors = chrome.extension.getBackgroundPage().getColors();
-        if (domains.length) {
-          chrome.tabs.sendMessage(tabs[0].id, {show: settings === 'on', domains: domains, colors: colors});
-        }
-      }
-    });
   });
 }
 
@@ -45,6 +58,9 @@ function checkCurrent() {
  * @returns {string} 'on' | 'off'
  */
 function getCurrentSetting() {
+  if (window.localStorage.toggleBehaviour === 'all') {
+    return window.localStorage.toggleState || 'off';
+  }
   var pattern = getPattern(url);
   var setting = 'off';
   var state = JSON.parse(chrome.extension.getBackgroundPage().getLocalStorageRules());
@@ -76,12 +92,16 @@ function getPattern() {
 function changeSettings(tab) {
   var setting = getCurrentSetting();
   var newSetting = (setting == 'on' ? 'off' : 'on');
-  var pattern = getPattern(tab.url);
-  if (pattern) {
-    setLocalStorageRule(pattern, newSetting);
-    updateIcon(newSetting);
-    checkCurrent();
+  window.localStorage.toggleState = newSetting;
+  updateIcon(newSetting);
+  if (window.localStorage.toggleBehaviour === 'site') {
+    var pattern = getPattern(tab.url);
+    if (pattern) {
+      setLocalStorageRule(pattern, newSetting);
+    }
   }
+  checkCurrent();
+
 }
 
 /**
@@ -177,6 +197,13 @@ function init() {
   if (!window.localStorage.nfe_state) {
     clearRules();
   }
+
+  // default toggle behaviour
+  window.localStorage.toggleBehaviour = "all";
+
+  // default highlighting
+  window.localStorage.follow_enabled = "true";
+  window.localStorage.nofollow_enabled = "true";
 
   // Version
   var currentVersion = getVersion();

@@ -8,12 +8,15 @@ function generateStyleSheet(colors) {
     styleEl.type = 'text/css';
     styleEl.id = 'nfe_style';
     document.getElementsByTagName('head')[0].appendChild(styleEl);
-    styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-nofollow, a.nfe-extension-link.nfe-nofollow * {color: #' + colors.nofollow_fg + '; background-color: #' + colors.nofollow_bg+ ' !important;}'));
-    styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-nofollow img {border: 6px solid #' + colors.nofollow_bg + ' !important;}'));
-    styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-follow, a.nfe-extension-link.nfe-follow * {color: #' + colors.follow_fg + '; background-color: #' + colors.follow_bg+ ' !important;}'));
-    styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-follow img {border: 6px solid #' + colors.follow_bg + ' !important;}'));
+    if (colors.nofollow_fg && colors.nofollow_bg) {
+      styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-nofollow, a.nfe-extension-link.nfe-nofollow * {color: #' + colors.nofollow_fg + '; background-color: #' + colors.nofollow_bg+ ' !important;}'));
+      styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-nofollow img {border: 6px solid #' + colors.nofollow_bg + ' !important;}'));
+    }
+    if (colors.follow_fg && colors.follow_bg) {
+      styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-follow, a.nfe-extension-link.nfe-follow * {color: #' + colors.follow_fg + '; background-color: #' + colors.follow_bg+ ' !important;}'));
+      styleEl.appendChild(document.createTextNode('a.nfe-extension-link.nfe-follow img {border: 6px solid #' + colors.follow_bg + ' !important;}'));
+    }
   }
-
 }
 
 /**
